@@ -41,11 +41,8 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Set Django settings and run tests
-        env:
-          DJANGO_SETTINGS_MODULE: greeting.settings  # ← adjust if your app is not `greeting`
-        run: |
-          pytest
+      - name: Run tests
+        run: pytest
 
   lint:
     name: Lint Code
@@ -65,16 +62,13 @@ jobs:
           pip install black flake8 isort
 
       - name: Run flake8
-        run: |
-          flake8 . --count --max-complexity=10 --max-line-length=88 --statistics
+        run: flake8 . --count --max-complexity=10 --max-line-length=88 --statistics
 
       - name: Run black --check
-        run: |
-          black . --check
+        run: black . --check
 
       - name: Run isort --check-only
-        run: |
-          isort . --check-only
+        run: isort . --check-only
 
   build:
     name: Build Project
@@ -90,5 +84,4 @@ jobs:
           python-version: '3.11'
 
       - name: Simulate Build
-        run: |
-          echo "Simulating build step — zip, docker build, or package setup here"
+        run: echo "Simulating build step — zip, docker build, or package setup here"
