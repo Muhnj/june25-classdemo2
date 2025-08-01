@@ -23,7 +23,20 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install flake8 black isort pytest
 
       - name: Run tests
         run: |
           if [ -f pytest.ini ] || [ -d tests ]; then pytest; else echo "No tests found."; fi
+
+      - name: Run lint checks (flake8, black, isort)
+        run: |
+          echo "Running flake8..."
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
+
+          echo "Running black --check..."
+          black . --check
+
+          echo "Running isort --check-only..."
+          isort . --check-only
